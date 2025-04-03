@@ -42,6 +42,42 @@
 
       </p>
   <script src="script.js"></script>
+  <div id="cookie-banner" style="position: fixed; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; text-align: center;">
+    <p>Diese Website verwendet Google Analytics, um anonyme Statistiken zu erfassen. Mehr Infos in unserer <a href="/datenschutz.html" style="color: #4CAF50;">Datenschutzerklärung</a>.</p>
+    <button onclick="acceptCookies()" style="background: #4CAF50; color: white; border: none; padding: 5px 10px; cursor: pointer;">Akzeptieren</button>
+    <button onclick="declineCookies()" style="background: red; color: white; border: none; padding: 5px 10px; cursor: pointer;">Ablehnen</button>
+</div>
+
+<script>
+    function acceptCookies() {
+        localStorage.setItem("cookiesAccepted", "true");
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+
+    function declineCookies() {
+        localStorage.setItem("cookiesAccepted", "false");
+        document.getElementById("cookie-banner").style.display = "none";
+        window['ga-disable-G-7NZECP6ZK1'] = true; // Deaktiviert Google Analytics
+    }
+
+    if (localStorage.getItem("cookiesAccepted") === "true") {
+        // Google Analytics laden
+        (function() {
+            var script = document.createElement("script");
+            script.src = "https://www.googletagmanager.com/gtag/js?id=G-7NZECP6ZK1";
+            script.async = true;
+            document.head.appendChild(script);
+            script.onload = function() {
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-7NZECP6ZK1', { 'anonymize_ip': true });
+            };
+        })();
+    } else if (localStorage.getItem("cookiesAccepted") === "false") {
+        window['ga-disable-G-7NZECP6ZK1'] = true;
+    }
+</script>
 </body>
 
 </html>
